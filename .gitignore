@@ -4,6 +4,7 @@ node_modules/
 # Environment variables
 .env
 .env.*  # For multiple environments like .env.development, .env.production
+config.env
 
 # Logs
 logs/

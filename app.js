@@ -9,7 +9,7 @@ import { errorMiddleware } from "./middlewares/errorMiddlewares.js"; // Custom e
 export const app = express(); // Create an instance of an Express application.
 
 // Load environment variables from config.env file
-config({ path: "./config/config.env" });
+config({ path: "./config.env" });
 
 // Enable Cross-Origin requests (CORS) with specific configuration
 app.use(
