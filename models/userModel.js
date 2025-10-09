@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
 	{
@@ -19,15 +19,15 @@ const userSchema = new mongoose.Schema(
 		},
 		role: {
 			type: String,
-			enum: ['Admin', 'User'],
-			default: 'User',
+			enum: ["Admin", "User"],
+			default: "User",
 		},
 		accountVerified: { type: Boolean, default: false },
 		borrowedBooks: [
 			{
 				bookId: {
 					type: mongoose.Schema.Types.ObjectId,
-					ref: 'Borrow',
+					ref: "Borrow",
 				},
 				returned: {
 					type: Boolean,
@@ -42,7 +42,7 @@ const userSchema = new mongoose.Schema(
 			public_id: String,
 			url: String,
 		},
-		varificationCode: Number,
+		verificationCode: Number,
 		verificationCodeExpire: Date,
 		resetPassword: String,
 		resetPasswordExpire: Date,
@@ -52,4 +52,18 @@ const userSchema = new mongoose.Schema(
 	}
 );
 
-export const User = mongoose.model('User', userSchema);
+userSchema.methods.generateVerificationCode = function () {
+	function generateRandomFiveDigitNumber() {
+		const firstDigit = Math.floor(Math.random() * 9) + 1;
+		const remainingDigits = Math.floor(Math.random() * 10000)
+			.toString()
+			.padStart(4, 0);
+		return parseInt(firstDigit + remainingDigits);
+	}
+	const verificationCode = generateRandomFiveDigitNumber();
+	this.verificationCode = verificationCode;
+	this.verificationCodeExpire = Date.now() + 15 * 60 * 1000; // 15 min
+	return verificationCode;
+};
+
+export const User = mongoose.model("User", userSchema);
