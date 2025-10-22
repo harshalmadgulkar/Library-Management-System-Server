@@ -43,7 +43,7 @@ export const register = catchAsyncErrors(async (req, res, next) => {
 			email,
 			password: hashedPassword,
 		});
-		const verificationCode = await user.generateVerification();
+		const verificationCode = await user.generateVerificationCode();
 		await user.save();
 		sendVerificationCode(verificationCode, email, res);
 	} catch (error) {

@@ -5,7 +5,9 @@ import cookieParser from "cookie-parser"; // cookie-parser helps parse cookies f
 import cors from "cors"; // cors enables Cross-Origin Resource Sharing to allow API access from a different domain.
 import { connectDB } from "./databse/db.js"; // Function to connect to MongoDB (or another database).
 import { errorMiddleware } from "./middlewares/errorMiddlewares.js"; // Custom error-handling middleware.
+import authRouter from "./routes/authRouter.js"; // Router for authentication-related routes.
 
+// Initialize Express application
 export const app = express(); // Create an instance of an Express application.
 
 // Load environment variables from config.env file
@@ -28,6 +30,9 @@ app.use(express.json()); // Allows the app to accept JSON payloads
 
 // Middleware to parse URL-encoded data (e.g., form submissions)
 app.use(express.urlencoded({ extended: true })); // extended: true allows nested objects in query strings
+
+// Mounting the authentication router on the /api/v1/auth path
+app.use("/api/v1/auth", authRouter); // Routes for authentication (e.g., register, login)
 
 // Connect to the database
 connectDB(); // Establish connection with the database before handling requests
