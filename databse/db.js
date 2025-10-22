@@ -1,14 +1,14 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 export const connectDB = () => {
 	mongoose
 		.connect(process.env.MONGO_URI, {
-			dbName: 'MERN STACK LIBRARY MANAGEMENT SYSTEM',
+			dbName: "library_management_system",
 		})
 		.then((res) => {
-			console.log('Database connected successfully.');
+			console.log("Database connected successfully.");
 		})
 		.catch((err) => {
-			console.log('Error connecting to database', err);
+			console.log("Error connecting to database", err);
 		});
 };
