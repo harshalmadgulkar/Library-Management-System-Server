@@ -1,3 +1,5 @@
+import { generateVerificationOtpTemplate } from "./emailTemplates.js";
+
 export async function sendVerificationCode(verificationCode, email, res) {
 	try {
 		const message = generateVerificationOtpTemplate(verificationCode);
