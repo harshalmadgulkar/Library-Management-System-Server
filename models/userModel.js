@@ -52,7 +52,7 @@ const userSchema = new mongoose.Schema(
 	}
 );
 
-userSchema.methods.generateVerificationCode = function () {
+userSchema.methods.generateVerificationCode = function async() {
 	function generateRandomFiveDigitNumber() {
 		const firstDigit = Math.floor(Math.random() * 9) + 1;
 		const remainingDigits = Math.floor(Math.random() * 10000)
