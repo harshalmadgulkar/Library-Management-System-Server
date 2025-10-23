@@ -99,3 +99,33 @@ export const verifyOtp = catchAsyncErrors(async (req, res, next) => {
 		return next(new ErrorHandler("Internal Server Error", 500));
 	}
 });
+
+export const login = catchAsyncErrors(async (req, res, next) => {
+	const { email, password } = req.body;
+	if (!email || !password) {
+		return next(new ErrorHandler("Please enter all fields.", 400));
+	}
+	const user = await User.findOne({ email, accountVerified: true }).select(
+		"+password"
+	);
+	if (!user) {
+		return next(new ErrorHandler("Invalid email or password.", 400));
+	}
+	const isPasswordMatched = await bcrypt.compare(password, user.password);
+	if (!isPasswordMatched) {
+		return next(new ErrorHandler("Invalid email or password.", 401));
+	}
+	sendToken(user, 200, "Login Successful", res);
+});
+
+export const logout = catchAsyncErrors(async (req, res, next) => {
+	res.status(200)
+		.cookie("token", null, {
+			expires: new Date(Date.now()),
+			httpOnly: true,
+		})
+		.json({
+			sucess: true,
+			message: "Logged out successfully",
+		});
+});
