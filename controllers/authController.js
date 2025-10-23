@@ -53,8 +53,6 @@ export const register = catchAsyncErrors(async (req, res, next) => {
 });
 
 export const verifyOtp = catchAsyncErrors(async (req, res, next) => {
-	console.log(req.body);
-
 	const { email, otp } = req.body;
 	if (!email || !otp) {
 		return next(new ErrorHandler("Please provide email and OTP.", 400));
@@ -84,7 +82,7 @@ export const verifyOtp = catchAsyncErrors(async (req, res, next) => {
 			return next(new ErrorHandler("Invalid OTP.", 400));
 		}
 
-		const currentTime = new Date.now();
+		const currentTime = Date.now();
 		const verificationCodeExpire = new Date(
 			user.verificationCodeExpire
 		).getTime();
