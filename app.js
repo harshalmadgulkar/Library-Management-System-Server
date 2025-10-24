@@ -6,6 +6,7 @@ import cors from "cors"; // cors enables Cross-Origin Resource Sharing to allow 
 import { connectDB } from "./databse/db.js"; // Function to connect to MongoDB (or another database).
 import { errorMiddleware } from "./middlewares/errorMiddlewares.js"; // Custom error-handling middleware.
 import authRouter from "./routes/authRouter.js"; // Router for authentication-related routes.
+import bookRouter from "./routes/bookRouter.js"; // Router for book-related routes.
 
 // Initialize Express application
 export const app = express(); // Create an instance of an Express application.
@@ -33,6 +34,7 @@ app.use(express.urlencoded({ extended: true })); // extended: true allows nested
 
 // Mounting the authentication router on the /api/v1/auth path
 app.use("/api/v1/auth", authRouter); // Routes for authentication (e.g., register, login)
+app.use("/api/v1/book", bookRouter); // Routes for book management (e.g., add, delete, get books)
 
 // Connect to the database
 connectDB(); // Establish connection with the database before handling requests
